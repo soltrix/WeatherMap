@@ -54,11 +54,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         latitude = intent.getDoubleExtra("latitude", defaultValue);
         longitude = intent.getDoubleExtra("longitude", defaultValue);
+        updateWeatherData(latitude, longitude);
+        //new CityPreference(MainActivity.this).setLatitude(latitude.toString());
+        //new CityPreference(MainActivity.this).setLongitude(latitude.toString());
 
         city = findViewById(R.id.city);
         data = findViewById(R.id.data);
 
-        updateWeatherData(new CityPreference(MainActivity.this).getLatitude(), new CityPreference(MainActivity.this).getLongitude());
+        //updateWeatherData(new CityPreference(MainActivity.this).getLatitude(), new CityPreference(MainActivity.this).getLongitude());
     }
 
     //меню
@@ -76,28 +79,28 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     //показать диалог выбора города
-    private void showInputDialog() {
-        AlertDialog.Builder chooseCity = new AlertDialog.Builder(this);
-        chooseCity.setIcon(R.mipmap.ic_launcher);
-        chooseCity.setTitle(R.string.choose_city);
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        chooseCity.setView(input);
-        chooseCity.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String lat = input.getText().toString();
-                String lon = input.getText().toString();
-                updateWeatherData(lat, lon);
-                new CityPreference(MainActivity.this).setLatitude(lat);
-                new CityPreference(MainActivity.this).setLongitude(lon);
-            }
-        });
-        chooseCity.show();
-    }
+//    private void showInputDialog() {
+//        AlertDialog.Builder chooseCity = new AlertDialog.Builder(this);
+//        chooseCity.setIcon(R.mipmap.ic_launcher);
+//        chooseCity.setTitle(R.string.choose_city);
+//        final EditText input = new EditText(this);
+//        input.setInputType(InputType.TYPE_CLASS_TEXT);
+//        chooseCity.setView(input);
+//        chooseCity.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String lat = input.getText().toString();
+//                String lon = input.getText().toString();
+//                updateWeatherData(lat, lon);
+//                new CityPreference(MainActivity.this).setLatitude(lat);
+//                new CityPreference(MainActivity.this).setLongitude(lon);
+//            }
+//        });
+//        chooseCity.show();
+//    }
 
     //Обновление/загрузка погодных данных
-    private void updateWeatherData(final String lat, final String lon) {
+    private void updateWeatherData(final Double lat, final Double lon) {
         new Thread() {
             public void run() {
                 final JSONObject json = WeatherData.getJSONData(MainActivity.this, lat, lon);

@@ -16,7 +16,7 @@ public class WeatherData {
 
     //Единственный метод класса, который делает запрос на сервер и получает от него данные
     //Возвращает объект JSON или null
-    public static JSONObject getJSONData (Context context, String latitude, String longitude){
+    public static JSONObject getJSONData (Context context, Double latitude, Double longitude){
         try{
             URL url = new URL (String.format(OPEN_WEATHER_MAP_API, latitude, longitude));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
