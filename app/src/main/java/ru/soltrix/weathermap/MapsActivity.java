@@ -2,12 +2,14 @@ package ru.soltrix.weathermap;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -41,7 +43,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
 
     /**
      * Manipulates the map once available.
@@ -139,5 +140,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 requestLocation();
             }
         }
+    }
+
+    public void sendLocation(View view)
+    {
+        Intent intent = new Intent(MapsActivity.this, MainActivity.class);
+        intent.putExtra("latitude", myLatitude);
+        intent.putExtra("longitude", myLongitude);
+        startActivity(intent);
     }
 }
